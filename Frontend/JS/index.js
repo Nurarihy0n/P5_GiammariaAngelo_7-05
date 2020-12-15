@@ -32,16 +32,16 @@ const getProductList = () => {
             console.log("error", error);
         });};
 
-let testRequestTitle = document.getElementsByClassName('test-requete-title'); 
-let xhr = new XMLHttpRequest();
+document.getElementById('test-requete-title').innerHTML = '<p>il est une autre fois</p>';
+// let xhr = new XMLHttpRequest();
 
-xhr.onreadystatechange = function() {
-    if (this.readyState == XMLHttpRequest.DONE && this.status == 200){
-        let response = JSON.parse(this.responseText);
+// xhr.onreadystatechange = function() {
+//     if (this.readyState == XMLHttpRequest.DONE && this.status == 200){
+//         let response = JSON.parse(this.responseText);
        
- console.log(response);
-        testRequestTitle.innerHTML = 'on essaye juste';
-    }
-};
-    xhr.open('GET', '​http://localhost:3000/api/furniture');
-    xhr.send();
+//  console.log(response);
+//         testRequestTitle.innerHTML = 'on essaye juste';
+//     }
+// };
+//     xhr.open('GET', '​http://localhost:3000/api/furniture');
+//     xhr.send();
