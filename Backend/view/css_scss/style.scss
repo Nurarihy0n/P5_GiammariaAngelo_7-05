@@ -1,0 +1,26 @@
+@font-face {
+    font-family: 'RobotoRegular';
+    font-style: normal;
+    font-weight: normal;
+    src: url('Fonts/Roboto-Regular.ttf') format('Truetype');
+    }
+
+$font-regular: 'RobotoRegular', sans-serif, helvetica;
+
+body{
+    margin: auto;
+}
+//EN-TETE
+h1 {
+    font-family: $font-regular;
+    color: #f44336;
+    text-align: center;
+    padding: 100px;
+    background: url(../img/montagne-header.jpg);
+    background-size: cover;
+}
+
+
+// .image_pdt{
+//     width: 20em;
+// }
