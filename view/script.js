@@ -158,13 +158,14 @@ let productDetailsPage = function (json) {
         let divInfo = document.createElement('div');
         divInfo.className = 'col-md-6 info';
         let rowTitle = document.createElement('div');
-        rowTitle.className = 'row title';
+        rowTitle.className = 'row title rowTitle';
         let col = document.createElement('div');
-        col.className = 'col';
+        col.className = 'col colDetailCard';
         let cardName = document.createElement('h2');
         cardName.textContent = camera.name;
 
         let pDescription = document.createElement('p');
+        pDescription.className = 'pDescription';
         pDescription.textContent = camera.description;
         let aFocus = document.createElement('a');
         let rowPrice = document.createElement('div');
@@ -174,6 +175,7 @@ let productDetailsPage = function (json) {
         let input = document.createElement('input');
         input.setAttribute = ('type', 'radio');
         input.setAttribute = ('name', "focus1");
+        input.setAttribute = ('checked');
         let divRowFocus = document.createElement('div');
         divRowFocus.className = 'row';
         divRowFocus.textContent = camera.lenses;
@@ -182,9 +184,9 @@ let productDetailsPage = function (json) {
         let rowLower = document.createElement('div');
         rowLower.className = 'row lower';
         let divButton = document.createElement('div');
-        divButton.className = 'col text-right align-self-cente';
+        divButton.className = 'col text-right align-self-center divButton';
         let buttonAddCart = document.createElement('button');
-        buttonAddCart.className = 'btn';
+        buttonAddCart.className = 'btnAddCart';
         buttonAddCart.textContent = 'Ajouter au panier';
 
 

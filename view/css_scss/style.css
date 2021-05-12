@@ -17,4 +17,145 @@ h1 {
   background: url(../img/montagne-header.jpg);
   background-size: cover;
 }
+
+#detailCard {
+  max-width: 1000px;
+  width: 100%;
+  padding: 4rem;
+  margin-top: 10px;
+  background-color: #343a40;
+  color: white;
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+@media (max-witdh: 768px) {
+  #detailCard {
+    width: 100%;
+    padding: 1.5rem;
+  }
+}
+
+#divRowDetail {
+  margin: 0;
+}
+
+.info {
+  padding: 6vh 0vh;
+}
+
+@media (max-width: 768px) {
+  .info {
+    padding: 0;
+  }
+  .img-fluid {
+    padding: 2.5rem 0;
+  }
+}
+
+.rowTitle .colDetailCard {
+  padding: 0;
+}
+
+.pDescription {
+  font-family: "RobotoRegular", sans-serif, helvetica;
+  font-size: 20px;
+  margin-top: 25px;
+}
+
+label.radio {
+  padding: 1vh 4vh;
+  background-color: #363636;
+  color: grey;
+  display: inline-block;
+  margin-right: 2vh;
+}
+
+label.radio input:checked {
+  border: 1px solid white;
+  padding: 1vh 4vh;
+  background-color: #363636;
+  margin-right: 2vh;
+  color: #ffffff;
+  display: inline-block;
+}
+
+.lower {
+  margin-top: 3rem;
+  padding: 0;
+}
+
+.divButton {
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  .lower {
+    padding: 2vh;
+    margin-right: 1vh;
+    color: grey;
+    border: 1px solid #555555;
+  }
+}
+
+.btnAddCart {
+  background-color: transparent;
+  border-color: #f44336;
+  color: #f44336;
+  padding: 1.8vh 4.5vh;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  border-radius: 3px;
+}
+
+.btnAddCart:focus {
+  box-shadow: none;
+  outline: none;
+  box-shadow: none;
+  color: white;
+  -webkit-box-shadow: none;
+  -webkit-user-select: none;
+  -webkit-transition: none;
+  transition: none;
+}
+
+.btnAddCart:hover {
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .btnAddCart {
+    background-color: transparent;
+    border-color: rgba(186, 216, 125, 0.863);
+    color: rgba(186, 216, 125, 0.863);
+    padding: 1vh;
+    font-size: 0.9rem;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    border-radius: 3px;
+  }
+}
+
+a {
+  color: unset;
+}
+
+a:hover {
+  color: unset;
+  text-decoration: none;
+}
+
+label.radio input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+label.radio {
+  cursor: pointer;
+}
 /*# sourceMappingURL=style.css.map */
