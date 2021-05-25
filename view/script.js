@@ -1,27 +1,3 @@
-
-//Validation des champs du formulaire et envoi
-
-function formCart() {
-    document.forms['enregistrement'].addEventListener("submit", function (e) {
-
-        let erreur;
-        let inputs = this;
-
-        // traitement generique
-        for (let i = 0; i < inputs.length; i++) {
-            if (!inputs[i].value) {
-                erreur = "Veuillez renseigner tous les champs";
-            }
-        }
-
-        if (erreur) {
-            e.preventDefault();
-            document.getElementById('erreur').innerHTML = erreur;
-        } else {
-            alert('Formulaire envoye !')
-        }
-    });
-}
 // -------------------------PAGE D'ACCEUIL------------------------------------------------------------------------
 
 function indexProduct() {
@@ -43,7 +19,6 @@ function indexProduct() {
 
     const afficherCamera = async function (produits) {
         produits.forEach(function (camera) {
-            console.log(camera)
 
             this.name = camera.name;
             this.price = camera.price;
@@ -130,12 +105,12 @@ function indexProduct() {
 
 function productDetailsPage(json) {
 
-    //1. Recuperer l'id
+    //1. RECUPERATION DE L'ID 
     let urlParams = new URLSearchParams(window.location.search);
     let cameraId = urlParams.get("camera");
     let cameraURL = 'http://localhost:3000/api/cameras/' + cameraId;
 
-    //2. Recuper l'api
+    //2. RECUPERATION DE L'API
     fetch(cameraURL,
         {
             method: 'GET',
@@ -148,7 +123,7 @@ function productDetailsPage(json) {
         .catch(error => console.log({ error }));
 }
 
-//3. Mettre en place la card 
+//3. MISE EN PLACE DE LA CARD 
 
 function productDetailsCard(camera) {
 
@@ -156,10 +131,9 @@ function productDetailsCard(camera) {
     document.getElementById('cardTitle').textContent = camera.name;
     document.getElementById('pDescription').textContent = camera.description;
 
-
+    // CREATION DU SELECT POUR LES LENTILLES
     let select = document.getElementById('cameraLenses');
     let options = camera.lenses;
-    console.log(options);
 
     for (let i = 0; i < options.length; i++) {
         let option = options[i];
@@ -168,7 +142,7 @@ function productDetailsCard(camera) {
         optionElt.textContent = option + ' / ' + (camera.price) / 100 + '$';
         select.appendChild(optionElt);
     }
-
+    
     let detailCard = document.getElementById('detailCard');
     let rowLower = document.createElement('div');
     rowLower.className = 'row lower';
@@ -184,9 +158,9 @@ function productDetailsCard(camera) {
     divButton.appendChild(buttonAddCart);
 }
 
+//RECUPERATION API POUR PANIER
 function addToCart(cameraId) {
     let cameraURL = 'http://localhost:3000/api/cameras/' + cameraId;
-    console.log('addToCart');
     fetch(cameraURL,
         {
             method: 'GET',
@@ -199,14 +173,14 @@ function addToCart(cameraId) {
         .catch(error => console.log({ error }));
 
 }
-
+// FONCTIONNALITE DU PANIER
 function addProductToCard(camera) {
+
     let panier = localStorage.getItem("panier");
 
     if (!panier) {
         panier = {
             cameras: [camera],
-            lenses: camera.lenses,
             total: camera.price / 100
         }
         localStorage.setItem('panier', JSON.stringify(panier));
@@ -216,11 +190,11 @@ function addProductToCard(camera) {
         panierObject.cameras.push(camera);
         panierObject.total = Number(panierObject.total) + Number(camera.price / 100);
         localStorage.setItem('panier', JSON.stringify(panierObject));
-        alert('Votre article a bien ete ajoute au panier !');
+        alert('Votre article a bien ete ajouter a votre panier !')
     }
+    
 }
-// ===> Recuperation des produits du localstorage
-
+// ===> RECUPERTION DES PRODUIT DU LOCALSTORAGE
 function getCameraToCart() {
     let cameraURL = 'http://localhost:3000/api/cameras/' + cameraId;
     fetch(cameraURL,
@@ -236,21 +210,101 @@ function getCameraToCart() {
 
 }
 
-function getCart(camera) {
+function getCart(cameras) {
     let cartItems = localStorage.getItem('panier');
     cartItems = JSON.parse(cartItems);
-    console.log(cartItems);
 
-    let produitsContainer = document.querySelector('.produits-container');
-    let produits = document.querySelector('.produits');
+    let table = document.querySelector('.table');
 
     if (!cartItems) {
-        produitsContainer.textContent = 'Votre panier est vide !';
+        table.textContent = 'Votre panier est vide !';
     } else {
-        let produitName = document.createElement('div');
-        produitName.textContent = this.name;
-        produits.appendChild(produitName);
+        let cameras = cartItems.cameras;
+        for(let i = 0; i < cameras.length; i++){
+            let cartItem = cameras[i];
+            
+            let tbody = document.createElement('tbody');
+            let tr = document.createElement('tr');
+            let th = document.createElement('th');
+            th.setAttribute("scope", "row");
+            th.className = 'border-0';
+            let divTitleProduct = document.createElement('div');
+            divTitleProduct.className = 'p-2';
+            let imgTitle = document.createElement('img');
+            imgTitle.setAttribute("style", "width: 200px; height: auto");
+            imgTitle.className = 'img-fluid rounded shadow-sm';
+            imgTitle.src = cartItem.imageUrl;
+            let divTitle = document.createElement('div');
+            divTitle.className = 'ml-3 d-inline-block align-middle';
+            let hTitle = document.createElement('h5');
+            hTitle.className = 'mb-0';
+            let hTitleDiv = document.createElement('div');
+            hTitleDiv.className = 'd-inline-block align-middle';
+            hTitleDiv.textContent = cartItem.name;
+
+            let tdPrix = document.createElement('td');
+            tdPrix.className = 'border-0 align-middle'
+            tdPrix.textContent = cartItem.price / 100 + '$';
+
+            // let aLess = document.createElement('a');
+            // aLess.setAttribute('onclik', `incrementButton`);
+            // let aPlus = document.createElement('a');
+            // let iLessQuantite = document.createElement('i');
+            // iLessQuantite.className = 'fas fa-minus';
+            // let iPlusQuantite = document.createElement('i');
+            // iPlusQuantite.className = 'fas fa-plus-circle';
+
+            // let tdQuantite = document.createElement('td');
+            // tdQuantite.className = 'border-0 align-middle';
+            // tdQuantite.textContent = cartItem.Number;
+
+            // let tdTotal = document.createElement('td');
+            // tdTotal.className = 'border-0 align-middle';
+
+            document.querySelector('.divTotal').textContent = 'TOTAL :' + cartItems.total + '$';
+
+            table.appendChild(tbody);
+            tbody.appendChild(tr);
+            tr.appendChild(th);
+            th.appendChild(divTitleProduct);
+            divTitleProduct.appendChild(imgTitle);
+            divTitleProduct.appendChild(divTitle);
+            divTitle.appendChild(hTitle);
+            hTitle.appendChild(hTitleDiv);     
+            
+            tr.appendChild(tdPrix);
+            // tr.appendChild(tdQuantite);
+            // tdQuantite.appendChild(aLess);
+            // aLess.appendChild(iLessQuantite);
+            // tdQuantite.appendChild(aPlus);
+            // aPlus.appendChild(iPlusQuantite);
+            // tr.appendChild(tdTotal);
+
+        };
     }
 }
 
-getCart();
+
+//Validation des champs du formulaire et envoi
+
+function formCart() {
+    document.forms['enregistrement'].addEventListener("submit", function (e) {
+
+        let erreur;
+        let inputs = this;
+
+        // traitement generique
+        for (let i = 0; i < inputs.length; i++) {
+            if (!inputs[i].value) {
+                erreur = "Veuillez renseigner tous les champs";
+            }
+        }
+
+        if (erreur) {
+            e.preventDefault();
+            document.getElementById('erreur').innerHTML = erreur;
+        } else {
+            alert('Formulaire envoye !')
+        }
+    });
+}

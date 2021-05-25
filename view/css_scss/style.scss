@@ -11,6 +11,14 @@ $color-title: #f44336;
 body{
     margin: auto;
 }
+
+.produits-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 50px;
+    padding-bottom: 100px;
+}
 //EN-TETE
 h1 {
     font-family: $font-regular;
@@ -109,4 +117,59 @@ label.radio input {
 label.radio {
     cursor: pointer
 }
+
+/* ------ Page "MON PANIER -------*/
+
+.produits-container{
+    max-width: 650px;
+    justify-content: space-around;
+    margin: 0 auto;
+    margin-top: 50px;
+
+  }
+  
+  .produit-header{
+    width: 100%;
+    max-width: 650px;
+    display: flex;
+    justify-content: flex-start;
+    border-bottom: 4px solid lightgrey;
+    margin: 0 auto;
+  }
+  
+  .produit-title{
+    width: 45%;
+  }
+  
+  .prix{
+    width: 15%;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid lightgrey;
+  }
+  
+  .quantite{
+    width: 30%;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid lightgrey;
+  }
+  .total{
+    width: 10%;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid lightgrey;
+  }
+  .produits{
+    width: 45%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid lightgrey;
+  }
+  #btnValidation{
+      position: relative;
+      left: 70%;
+  }
 
