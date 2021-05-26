@@ -287,6 +287,7 @@ function getCart(cameras) {
 
 //Validation des champs du formulaire et envoi
 
+
 function formCart() {
     document.forms['enregistrement'].addEventListener("submit", function (e) {
 
@@ -304,7 +305,43 @@ function formCart() {
             e.preventDefault();
             document.getElementById('erreur').innerHTML = erreur;
         } else {
-            alert('Formulaire envoye !')
+            sendOrder();
+
+            // Redirection sur la page de remerciement et nettoyage du panier 
+            localStorage.clear();
+            document.location.href = 'html/confirmation.html';
+
         }
     });
 }
+
+function sendOrder() {
+
+    let cameraUrlOrder = 'http://localhost:3000/api/cameras/' + camera.order;
+
+    fetch(cameraUrlOrder, {
+        method: 'POST',
+        headers: {
+            "Accept": "application/JSON",
+            "Content-type": "application/JSON"
+        },
+    })
+    .then(send => send(json))
+    .then(json => [OrderFiles(json)])
+    .catch(error => console.log({error}));
+    
+}
+
+// Tableau contenant les valeurs du formulaires et les articles commander par le clients
+
+let OrderFiles = [
+    contact = document.forms['enregistrement'].value,
+    cameraOrder = localStorage.getItem('panier')
+];
+
+
+
+
+
+
+
