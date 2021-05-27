@@ -142,7 +142,7 @@ function productDetailsCard(camera) {
         optionElt.textContent = option + ' / ' + (camera.price) / 100 + '$';
         select.appendChild(optionElt);
     }
-    
+
     let detailCard = document.getElementById('detailCard');
     let rowLower = document.createElement('div');
     rowLower.className = 'row lower';
@@ -192,7 +192,7 @@ function addProductToCard(camera) {
         localStorage.setItem('panier', JSON.stringify(panierObject));
         alert('Votre article a bien ete ajouter a votre panier !')
     }
-    
+
 }
 // ===> RECUPERTION DES PRODUIT DU LOCALSTORAGE
 function getCameraToCart() {
@@ -210,7 +210,7 @@ function getCameraToCart() {
 
 }
 
-function getCart(cameras) {
+function getCart() {
     let cartItems = localStorage.getItem('panier');
     cartItems = JSON.parse(cartItems);
 
@@ -220,9 +220,9 @@ function getCart(cameras) {
         table.textContent = 'Votre panier est vide !';
     } else {
         let cameras = cartItems.cameras;
-        for(let i = 0; i < cameras.length; i++){
+        for (let i = 0; i < cameras.length; i++) {
             let cartItem = cameras[i];
-            
+
             let tbody = document.createElement('tbody');
             let tr = document.createElement('tr');
             let th = document.createElement('th');
@@ -246,21 +246,6 @@ function getCart(cameras) {
             tdPrix.className = 'border-0 align-middle'
             tdPrix.textContent = cartItem.price / 100 + '$';
 
-            // let aLess = document.createElement('a');
-            // aLess.setAttribute('onclik', `incrementButton`);
-            // let aPlus = document.createElement('a');
-            // let iLessQuantite = document.createElement('i');
-            // iLessQuantite.className = 'fas fa-minus';
-            // let iPlusQuantite = document.createElement('i');
-            // iPlusQuantite.className = 'fas fa-plus-circle';
-
-            // let tdQuantite = document.createElement('td');
-            // tdQuantite.className = 'border-0 align-middle';
-            // tdQuantite.textContent = cartItem.Number;
-
-            // let tdTotal = document.createElement('td');
-            // tdTotal.className = 'border-0 align-middle';
-
             document.querySelector('.divTotal').textContent = 'TOTAL :' + cartItems.total + '$';
 
             table.appendChild(tbody);
@@ -270,74 +255,70 @@ function getCart(cameras) {
             divTitleProduct.appendChild(imgTitle);
             divTitleProduct.appendChild(divTitle);
             divTitle.appendChild(hTitle);
-            hTitle.appendChild(hTitleDiv);     
-            
-            tr.appendChild(tdPrix);
-            // tr.appendChild(tdQuantite);
-            // tdQuantite.appendChild(aLess);
-            // aLess.appendChild(iLessQuantite);
-            // tdQuantite.appendChild(aPlus);
-            // aPlus.appendChild(iPlusQuantite);
-            // tr.appendChild(tdTotal);
+            hTitle.appendChild(hTitleDiv);
 
+            tr.appendChild(tdPrix);
         };
     }
 }
 
 
-//Validation des champs du formulaire et envoi
+//***************** Tentative enregistrer formulaire *****************
 
+//Recuperation bouton 
+let btnEnvoyerFormulaire = document.getElementById('envoyerFormulaire');
 
-function formCart() {
-    document.forms['enregistrement'].addEventListener("submit", function (e) {
+// Ecouter le bouton 
+btnEnvoyerFormulaire.addEventListener('click', (e) => {
+    e.preventDefault();
 
-        let erreur;
-        let inputs = this;
+    //Recuperation des valeurs du formulaire dans le localStoarge
+    localStorage.setItem('prenom', document.getElementById('prenom').value);
+    localStorage.setItem('nom', document.getElementById('nom').value);
+    localStorage.setItem('email', document.getElementById('email').value);
+    localStorage.setItem('adress', document.getElementById('adress').value);
+    localStorage.setItem('tel', document.getElementById('tel').value);
+    localStorage.setItem('departement', document.getElementById('departement').value);
+    localStorage.setItem('zip', document.getElementById('zip').value);
 
-        // traitement generique
-        for (let i = 0; i < inputs.length; i++) {
-            if (!inputs[i].value) {
-                erreur = "Veuillez renseigner tous les champs";
+    //Valeur du fomulaire dans un objet
+    const formulaire = {
+        prenom: localStorage.getItem('prenom'),
+        nom: localStorage.getItem('nom'),
+        email: localStorage.getItem('email'),
+        adress: localStorage.getItem('adress'),
+        tel: localStorage.getItem('tel'),
+        departement: localStorage.getItem('departement'),
+        zip: localStorage.getItem('zip'),
+    }
+
+    //Valeur du formulaire et des produits dans un objet 
+    let produitsDuPanier = localStorage.getItem('panier');
+    const aEnvoyer = {
+        formulaire,
+        produitsDuPanier
+    }
+    console.log(aEnvoyer);
+   
+});
+
+function envoieVersServeur() {
+    fetch('http://localhost:3000/api/cameras/order',
+        {
+            method: 'POST',
+            body: JSON.stringify(aEnvoyer),
+            headers: {
+                "content-type": "application/json"
             }
-        }
-
-        if (erreur) {
-            e.preventDefault();
-            document.getElementById('erreur').innerHTML = erreur;
-        } else {
-            sendOrder();
-
-            // Redirection sur la page de remerciement et nettoyage du panier 
-            localStorage.clear();
-            document.location.href = 'html/confirmation.html';
-
-        }
-    });
+        })
+        .then(response => response.json())
+        .then(json => idCommande(json))
+        .catch(error => console.log({error}))
 }
 
-function sendOrder() {
 
-    let cameraUrlOrder = 'http://localhost:3000/api/cameras/' + camera.order;
 
-    fetch(cameraUrlOrder, {
-        method: 'POST',
-        headers: {
-            "Accept": "application/JSON",
-            "Content-type": "application/JSON"
-        },
-    })
-    .then(send => send(json))
-    .then(json => [OrderFiles(json)])
-    .catch(error => console.log({error}));
-    
-}
 
-// Tableau contenant les valeurs du formulaires et les articles commander par le clients
-
-let OrderFiles = [
-    contact = document.forms['enregistrement'].value,
-    cameraOrder = localStorage.getItem('panier')
-];
 
 
 
