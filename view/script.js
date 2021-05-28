@@ -272,50 +272,49 @@ let btnEnvoyerFormulaire = document.getElementById('envoyerFormulaire');
 btnEnvoyerFormulaire.addEventListener('click', (e) => {
     e.preventDefault();
 
-    //Recuperation des valeurs du formulaire dans le localStoarge
-    localStorage.setItem('prenom', document.getElementById('prenom').value);
-    localStorage.setItem('nom', document.getElementById('nom').value);
+    //Recuperation des valeurs du formulaire dans le localStorage
+    localStorage.setItem('firstName', document.getElementById('firstName').value);
+    localStorage.setItem('lastName', document.getElementById('lastName').value);
     localStorage.setItem('email', document.getElementById('email').value);
     localStorage.setItem('adress', document.getElementById('adress').value);
-    localStorage.setItem('tel', document.getElementById('tel').value);
-    localStorage.setItem('departement', document.getElementById('departement').value);
-    localStorage.setItem('zip', document.getElementById('zip').value);
+    localStorage.setItem('city', document.getElementById('city').value);
 
     //Valeur du fomulaire dans un objet
-    const formulaire = {
-        prenom: localStorage.getItem('prenom'),
-        nom: localStorage.getItem('nom'),
+    const contact = {
+        firstName: localStorage.getItem('firstName'),
+        lastName: localStorage.getItem('lastName'),
         email: localStorage.getItem('email'),
         adress: localStorage.getItem('adress'),
-        tel: localStorage.getItem('tel'),
-        departement: localStorage.getItem('departement'),
-        zip: localStorage.getItem('zip'),
+        city: localStorage.getItem('city')
     }
 
     //Valeur du formulaire et des produits dans un objet 
     let produitsDuPanier = localStorage.getItem('panier');
+    let products = JSON.parse(produitsDuPanier);
     const aEnvoyer = {
-        formulaire,
-        produitsDuPanier
+        contact,
+        products
     }
     console.log(aEnvoyer);
+    envoieVersServeur(aEnvoyer);
    
 });
 
-function envoieVersServeur() {
+function envoieVersServeur(aEnvoyer) {
     fetch('http://localhost:3000/api/cameras/order',
         {
             method: 'POST',
+            mode : 'cors',
             body: JSON.stringify(aEnvoyer),
             headers: {
-                "content-type": "application/json"
+                "Content-Type": "application/json"
             }
         })
         .then(response => response.json())
-        .then(json => idCommande(json))
+        .then(json => console.log(json))
         .catch(error => console.log({error}))
 }
-
+ 
 
 
 
