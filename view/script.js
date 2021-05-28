@@ -273,24 +273,31 @@ btnEnvoyerFormulaire.addEventListener('click', (e) => {
     e.preventDefault();
 
     //Recuperation des valeurs du formulaire dans le localStorage
-    localStorage.setItem('firstName', document.getElementById('firstName').value);
-    localStorage.setItem('lastName', document.getElementById('lastName').value);
-    localStorage.setItem('email', document.getElementById('email').value);
-    localStorage.setItem('adress', document.getElementById('adress').value);
-    localStorage.setItem('city', document.getElementById('city').value);
+    let firstName = document.getElementById('firstName').value;
+    let lastName = document.getElementById('lastName').value;
+    let email = document.getElementById('email').value;
+    let adress = document.getElementById('adress').value;
+    let city = document.getElementById('city').value;
 
     //Valeur du fomulaire dans un objet
     const contact = {
-        firstName: localStorage.getItem('firstName'),
-        lastName: localStorage.getItem('lastName'),
-        email: localStorage.getItem('email'),
-        adress: localStorage.getItem('adress'),
-        city: localStorage.getItem('city')
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        adress: adress,
+        city: city
     }
 
     //Valeur du formulaire et des produits dans un objet 
-    let produitsDuPanier = localStorage.getItem('panier');
-    let products = JSON.parse(produitsDuPanier);
+    let panier = localStorage.getItem('panier');
+    let productsList = JSON.parse(panier).cameras; 
+
+    let products = [];
+    for(let i = 0; i < productsList.length; i++){
+        const product = productsList[i];
+        products.push(product._id);
+    }
+
     const aEnvoyer = {
         contact,
         products
@@ -304,7 +311,6 @@ function envoieVersServeur(aEnvoyer) {
     fetch('http://localhost:3000/api/cameras/order',
         {
             method: 'POST',
-            mode : 'cors',
             body: JSON.stringify(aEnvoyer),
             headers: {
                 "Content-Type": "application/json"
