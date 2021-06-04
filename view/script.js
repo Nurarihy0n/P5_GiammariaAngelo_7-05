@@ -276,7 +276,7 @@ btnEnvoyerFormulaire.addEventListener('click', (e) => {
     let firstName = document.getElementById('firstName').value;
     let lastName = document.getElementById('lastName').value;
     let email = document.getElementById('email').value;
-    let adress = document.getElementById('adress').value;
+    let address = document.getElementById('address').value;
     let city = document.getElementById('city').value;
 
     //Valeur du fomulaire dans un objet
@@ -284,7 +284,7 @@ btnEnvoyerFormulaire.addEventListener('click', (e) => {
         firstName: firstName,
         lastName: lastName,
         email: email,
-        adress: adress,
+        address: address,
         city: city
     }
 
@@ -313,14 +313,39 @@ function envoieVersServeur(aEnvoyer) {
             method: 'POST',
             body: JSON.stringify(aEnvoyer),
             headers: {
+                "Accept": "application/json",
                 "Content-Type": "application/json"
             }
         })
         .then(response => response.json())
-        .then(json => console.log(json))
+        .then(json => { 
+            let idReponse = (json);
+            orderId = idReponse.orderId;
+            localStorage.setItem('orderId', orderId);
+            envoieVersConfirmation();
+        })
         .catch(error => console.log({error}))
 }
- 
+
+//VALIDATION DES CHAMPS ET REDIRECTION SUR LA PAGE DE REMERCIEMENT
+
+function envoieVersConfirmation() { 
+    window.location = '../html/confirmation.html';
+};
+
+// PAGE DE CONFIRMATION
+
+function confirmation() {
+    //Affichage id order
+    const orderId = localStorage.getItem('orderId');
+    document.querySelector('.confirmationPrix').textContent = orderId;
+
+    //Affichage du prix 
+    let cartItems = localStorage.getItem('panier');
+    cartItems = JSON.parse(cartItems);
+    document.querySelector('.orderNumber').textContent = cartItems.total + '$';
+}
+
 
 
 
