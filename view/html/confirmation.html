@@ -11,7 +11,8 @@
     <title>Orinoco</title>
     
 </head>
-<body>
+<body onload="confirmation()">
+    <header>
     <div class="bg-dark">
         <div class="container">
             <div class="row">
@@ -34,14 +35,16 @@
             </div>
         </div>
     </div>
-    <div class="container">
+    <h1>Orinoco</h1>
+    </header>
+    <div class="container container-remerciement">
         <div class="row">
             <div class="col my-3">
-                <div class="alert alert-info alert-dismissible fade show" role="alert">
-                    <h5 class="alert-heading">Merci</h5>
-                    <p>Votre commande a etais confirmer. Merci pour votre confiance et a bientot sur Orinoco</p>
-                    <p class="confirmationPrix"><br>
-                    <p class="orderNumber"></p></p>
+                <div>
+                    <h5 class="remerciementTitle">Merci ! A bientot chez Orinoco</h5>
+                    <p class="remerciementP">Votre commande est validee</p>
+                    <p>Votre numero de commande : <span class="confirmationPrix"></span><br>
+                    Prix Total : <span class="orderNumber"></span></p>
                 </div>
             </div>
         </div>

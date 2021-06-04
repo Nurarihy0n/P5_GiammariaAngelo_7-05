@@ -208,4 +208,25 @@ label.radio {
   position: relative;
   left: 70%;
 }
+
+.container-remerciement {
+  margin-top: 10px;
+  font-family: "RobotoRegular", sans-serif, helvetica;
+  text-align: center;
+}
+
+.remerciementTitle {
+  text-align: center;
+  font-size: 2rem;
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+  min-height: 100px;
+  border: 8px solid;
+  padding: 1rem;
+  -o-border-image: linear-gradient(to left, #313131, #e6e6e6) 1 0;
+     border-image: -webkit-gradient(linear, right top, left top, from(#313131), to(#e6e6e6)) 1 0;
+     border-image: linear-gradient(to left, #313131, #e6e6e6) 1 0;
+  color: #f44336;
+}
 /*# sourceMappingURL=style.css.map */

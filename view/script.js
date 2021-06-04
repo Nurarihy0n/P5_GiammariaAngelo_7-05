@@ -1,4 +1,4 @@
-// -------------------------PAGE D'ACCEUIL------------------------------------------------------------------------
+// -------------------------PAGE D'ACCEUIL----------------------------------------
 
 function indexProduct() {
 
@@ -100,6 +100,7 @@ function indexProduct() {
 
     getCamera()
 }
+//******************************* FIN DE LA PAGE D'ACCEUIL ******************************************/
 
 //----------------------PAGE DU CHOIX DE LA LENTILLE ET D'AJOUT AU PANIER---------------------
 
@@ -194,6 +195,14 @@ function addProductToCard(camera) {
     }
 
 }
+
+// **************** FIN PAGE DU CHOIX DE LA LENTILLE ET D'AJOUT AU PANIER **********************
+
+
+
+//:::::::::::::::::::::::::::::: PAGE PANIER :::::::::::::::::::::::::::::::
+
+
 // ===> RECUPERTION DES PRODUIT DU LOCALSTORAGE
 function getCameraToCart() {
     let cameraURL = 'http://localhost:3000/api/cameras/' + cameraId;
@@ -263,15 +272,15 @@ function getCart() {
 }
 
 
-//***************** Tentative enregistrer formulaire *****************
+// ------------- ENREGISTREMENT DU FORMULAIRE ET ENVOI AU SERVEUR ---------------
 
 //Recuperation bouton 
 let btnEnvoyerFormulaire = document.getElementById('envoyerFormulaire');
 
 // Ecouter le bouton 
 btnEnvoyerFormulaire.addEventListener('click', (e) => {
-    e.preventDefault();
 
+    e.preventDefault();
     //Recuperation des valeurs du formulaire dans le localStorage
     let firstName = document.getElementById('firstName').value;
     let lastName = document.getElementById('lastName').value;
@@ -279,13 +288,14 @@ btnEnvoyerFormulaire.addEventListener('click', (e) => {
     let address = document.getElementById('address').value;
     let city = document.getElementById('city').value;
 
+
     //Valeur du fomulaire dans un objet
     const contact = {
         firstName: firstName,
         lastName: lastName,
-        email: email,
         address: address,
-        city: city
+        city: city,
+        email: email
     }
 
     //Valeur du formulaire et des produits dans un objet 
@@ -298,14 +308,71 @@ btnEnvoyerFormulaire.addEventListener('click', (e) => {
         products.push(product._id);
     }
 
+    // ::::::::::::: GESTION DES CHAMPS DU FORMULAIRE :::::::::::::
+    
+    const regexForm = (value) => {
+        return /^[A-Za-z]{2,20}$/.test(value);
+    }
+
+    //FirtsName control 
+    function controlPrenom() {
+        if (regexForm(firstName)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    //LastName control
+    function controlNom() {
+        if (regexForm(lastName)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    //email control 
+    function controlEmail() {
+        if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+     //City control
+     function controlCity() {
+        if (regexForm(city)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    // Adress control
+    function controlAddress(){
+        if (/^\d+\s[A-z]+\s[A-z]+/.test(address)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     const aEnvoyer = {
         contact,
         products
     }
-    console.log(aEnvoyer);
-    envoieVersServeur(aEnvoyer);
-   
+    console.log('aEnvoyer');
+    console.log(aEnvoyer);  
+
+    if (controlPrenom() && controlNom() && controlEmail() && controlCity() && controlAddress()){
+        envoieVersServeur(aEnvoyer);
+    } else {
+        alert('Veuillez renseignez tous les champs');
+    }
+    //----------------- FIN DE LA VALIDATION DES CHAMPS DU FORMULAIRE ---------------
+
 });
+
+
+
 
 function envoieVersServeur(aEnvoyer) {
     fetch('http://localhost:3000/api/cameras/order',
@@ -322,18 +389,21 @@ function envoieVersServeur(aEnvoyer) {
             let idReponse = (json);
             orderId = idReponse.orderId;
             localStorage.setItem('orderId', orderId);
-            envoieVersConfirmation();
+            envoieVersRemerciement();
         })
         .catch(error => console.log({error}))
 }
 
-//VALIDATION DES CHAMPS ET REDIRECTION SUR LA PAGE DE REMERCIEMENT
 
-function envoieVersConfirmation() { 
+//REDIRECTION SUR LA PAGE DE REMERCIEMENT
+function envoieVersRemerciement() {
     window.location = '../html/confirmation.html';
-};
+}
 
-// PAGE DE CONFIRMATION
+// *********** FIN DE LA PAGE PANIER **************
+
+//::::::::::: PAGE CONFIMRATION ET REMERCIEMENT ::::::::
+
 
 function confirmation() {
     //Affichage id order
@@ -346,6 +416,7 @@ function confirmation() {
     document.querySelector('.orderNumber').textContent = cartItems.total + '$';
 }
 
+//********** FIN PAGE CONFIMRATION ET REMERCIEMENT ***********
 
 
 
