@@ -121,7 +121,13 @@ function productDetailsPage(json) {
         })
         .then(response => response.json())
         .then(json => productDetailsCard(json))
-        .catch(error => console.log({ error }));
+        .catch(error => traitementPageErreur(error));
+}
+
+// //PAGE ERREUR
+
+function traitementPageErreur() {
+    window.location.href = '../html/pageError.html';
 }
 
 //3. MISE EN PLACE DE LA CARD 
@@ -185,6 +191,8 @@ function addProductToCard(camera) {
             total: camera.price / 100
         }
         localStorage.setItem('panier', JSON.stringify(panier));
+        alert('Votre article a bien ete ajouter a votre panier !')
+        
     }
     else {
         let panierObject = JSON.parse(panier);
@@ -251,8 +259,11 @@ function getCart() {
             hTitleDiv.className = 'd-inline-block align-middle';
             hTitleDiv.textContent = cartItem.name;
 
+            let tdDelete = document.createElement('td');
+            tdDelete.className = 'border-0 align-middle';
+
             let tdPrix = document.createElement('td');
-            tdPrix.className = 'border-0 align-middle'
+            tdPrix.className = 'border-0 align-middle';
             tdPrix.textContent = cartItem.price / 100 + '$';
 
             document.querySelector('.divTotal').textContent = 'TOTAL :' + cartItems.total + '$';
@@ -313,44 +324,54 @@ btnEnvoyerFormulaire.addEventListener('click', (e) => {
     const regexForm = (value) => {
         return /^[A-Za-z]{2,20}$/.test(value);
     }
-
+    
     //FirtsName control 
     function controlPrenom() {
         if (regexForm(firstName)) {
+            document.getElementById('firstNameMissing').textContent = '';
             return true;
         } else {
+            document.getElementById('firstNameMissing').textContent = '(Veuillez remplir ce champs - Lettre uniquement)';
             return false;
         }
     }
     //LastName control
     function controlNom() {
         if (regexForm(lastName)) {
+            document.getElementById('lastNameMissing').textContent = '';
             return true;
         } else {
+            document.getElementById('lastNameMissing').textContent = '(Veuillez remplir ce champs - Lettre uniquement)';
             return false;
         }
     }
     //email control 
     function controlEmail() {
         if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+            document.getElementById('emailMissing').textContent = '';
             return true;
         } else {
+            document.getElementById('emailMissing').textContent = '(@mail invalid)';
             return false;
         }
     }
      //City control
      function controlCity() {
         if (regexForm(city)) {
+            document.getElementById('cityMissing').textContent = '';
             return true;
         } else {
+            document.getElementById('cityMissing').textContent = '(Votre adresse ne doit pas contenir de chiffres)';
             return false;
         }
     }
     // Adress control
     function controlAddress(){
         if (/^\d+\s[A-z]+\s[A-z]+/.test(address)){
+            document.getElementById('addressMissing').textContent = '';
             return true;
         } else {
+            document.getElementById('addressMissing').textContent = '(Address invalid)';
             return false;
         }
     }
@@ -359,13 +380,11 @@ btnEnvoyerFormulaire.addEventListener('click', (e) => {
         contact,
         products
     }
-    console.log('aEnvoyer');
-    console.log(aEnvoyer);  
-
+     
     if (controlPrenom() && controlNom() && controlEmail() && controlCity() && controlAddress()){
         envoieVersServeur(aEnvoyer);
     } else {
-        alert('Veuillez renseignez tous les champs');
+        document.getElementById('erreur').textContent = 'Veuillez renseignez tous les champs s\' il vous plait !';
     }
     //----------------- FIN DE LA VALIDATION DES CHAMPS DU FORMULAIRE ---------------
 

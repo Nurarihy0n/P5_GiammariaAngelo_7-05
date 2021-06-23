@@ -53,6 +53,9 @@
                     <div class="p-2 px-3 text-uppercase">Produit</div>
                   </th>
                   <th scope="col" class="border-0 bg-light">
+                    <div class="py-2"></div>
+                  </th>
+                  <th scope="col" class="border-0 bg-light">
                     <div class="py-2 text-uppercase">Prix</div>
                   </th>
                 </tr>
@@ -76,27 +79,27 @@
         <form id="formulaireCommande" name="validationForm">
           <div class="row mt-2">
             <div class="form-group col">
-              <label for="firstName">Prenom</label>
+              <label for="firstName">Prenom</label><span id="firstNameMissing"></span>
               <input type="text" id="firstName" name="firstName" class="form-control">
             </div>
             <div class="form-group col">
-              <label for="lastName">Nom</label>
+              <label for="lastName">Nom</label><span id="lastNameMissing"></span>
               <input type="text" id="lastName" name="lastName" class="form-control">
             </div>
           </div>
           <div class="row mt-1">
             <div class=" form-group col">
-              <label for="email">@mail</label>
+              <label for="email">@mail</label><span id="emailMissing"></span>
               <input id="email" type="email" name="email" class="form-control" placeholder="example@mail.com">
             </div>
           </div>
           <div class="form-group">
-            <label for="address">Adresse</label>
+            <label for="address">Adresse</label><span id="addressMissing"></span>
             <input type="text" id="address" name="address" class="form-control" placeholder="23 rue des fleurs">
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="city">Ville</label>
+              <label for="city">Ville</label><span id="cityMissing"></span>
               <input type="text" id="city" name="city" class="form-control">
             </div>
 

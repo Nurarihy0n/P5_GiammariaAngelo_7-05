@@ -191,3 +191,23 @@ label.radio {
       border-image: linear-gradient(to left, rgb(49, 49, 49), rgb(230, 230, 230)) 1 0;
       color: $color-title;
   }
+
+  //Controle de champs 
+
+  #firstNameMissing,
+  #lastNameMissing,
+  #cityMissing,
+  #addressMissing,
+  #emailMissing {
+    color:#B73225;
+    font-family: $font-regular;
+    font-size: 13px;
+    margin-left: 1em;
+    font-weight: bold;
+  }
+  #erreur {
+      color: #B73225;
+      font-family: $font-regular;
+      margin-bottom: 8px;
+      font-weight: bold;
+  }
